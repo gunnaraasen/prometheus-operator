@@ -38,6 +38,7 @@ func TestConfigGeneration(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			// t.Log(string(testcfg))
 
 			if !bytes.Equal(cfg, testcfg) {
 				t.Fatalf("Config generation is not deterministic.\n\n\nFirst generation: \n\n%s\n\nDifferent generation: \n\n%s\n\n", string(cfg), string(testcfg))
@@ -83,6 +84,16 @@ func generateTestConfig(version string) ([]byte, error) {
 				Resources: v1.ResourceRequirements{
 					Requests: v1.ResourceList{
 						v1.ResourceMemory: resource.MustParse("400Mi"),
+					},
+				},
+				RemoteWrite: []monitoringv1.RemoteWrite{
+					{
+						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
+					},
+				},
+				RemoteRead: []monitoringv1.RemoteRead{
+					{
+						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
 					},
 				},
 			},

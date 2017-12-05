@@ -113,9 +113,9 @@ type PrometheusSpec struct {
 	// If specified, the pod's tolerations.
 	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
 	// Remote write spec to send data to a remote store.
-	RemoteWrite *RemoteWrite `json:"remoteWrite,omitempty"`
+	RemoteWrite []RemoteWrite `json:"remoteWrite,omitempty"`
 	// Remote read spec to pull data from a remote store.
-	RemoteRead *RemoteRead `json:"remoteRead,omitempty"`
+	RemoteRead []RemoteRead `json:"remoteRead,omitempty"`
 }
 
 // Most recent observed status of the Prometheus cluster. Read-only. Not

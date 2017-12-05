@@ -88,12 +88,12 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 		},
 	})
 
-	if p.Spec.RemoteWrite != nil && p.Spec.RemoteWrite.URL != "" && version.Major == 2 {
+	if p.Spec.RemoteWrite != nil && version.Major == 2 {
 		remotewriteconfig := generateRemoteWriteConfig(p.Spec.RemoteWrite)
 		cfg = append(cfg, yaml.MapItem{Key: "remote_write", Value: remotewriteconfig})
 	}
 
-	if p.Spec.RemoteRead != nil && p.Spec.RemoteRead.URL != "" && version.Major == 2 {
+	if p.Spec.RemoteRead != nil && version.Major == 2 {
 		remotereadconfig := generateRemoteReadConfig(p.Spec.RemoteRead)
 		cfg = append(cfg, yaml.MapItem{Key: "remote_read", Value: remotereadconfig})
 	}
@@ -487,24 +487,24 @@ func generateAlertmanagerConfig(version semver.Version, am v1.AlertmanagerEndpoi
 	return cfg
 }
 
-func generateRemoteWriteConfig(rw *v1.RemoteWrite) yaml.MapSlice {
-	cfg := yaml.MapSlice{
-		{Key: "url", Value: rw.URL},
-	}
-	if rw.RemoteTimeout != "" {
-		cfg = append(cfg, yaml.MapItem{Key: "remote_timeout", Value: rw.RemoteTimeout})
+func generateRemoteWriteConfig(rw []v1.RemoteWrite) []yaml.MapSlice {
+	cfg := []yaml.MapSlice{}
+	for i, _ := range rw {
+		cfg = append(cfg, yaml.MapSlice{
+			{Key: "url", Value: rw[i].URL},
+		})
 	}
 
 	// TODO(gunnaraasen): handle remaining options for remote read
 	return cfg
 }
 
-func generateRemoteReadConfig(rr *v1.RemoteRead) yaml.MapSlice {
-	cfg := yaml.MapSlice{
-		{Key: "url", Value: rr.URL},
-	}
-	if rr.RemoteTimeout != "" {
-		cfg = append(cfg, yaml.MapItem{Key: "remote_timeout", Value: rr.RemoteTimeout})
+func generateRemoteReadConfig(rr []v1.RemoteRead) []yaml.MapSlice {
+	cfg := []yaml.MapSlice{}
+	for i, _ := range rr {
+		cfg = append(cfg, yaml.MapSlice{
+			{Key: "url", Value: rr[i].URL},
+		})
 	}
 
 	// TODO(gunnaraasen): handle remaining options for remote read

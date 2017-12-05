@@ -49,7 +49,7 @@ spec:
       - args:
         - --kubelet-service=kube-system/kubelet
         - --config-reloader-image=quay.io/coreos/configmap-reload:v0.0.1
-        image: quay.io/coreos/prometheus-operator:v0.15.0
+        image: quay.io/influxdb/prometheus-operator:v0.15.22
         name: prometheus-operator
         ports:
         - containerPort: 8080
@@ -297,6 +297,10 @@ spec:
   serviceMonitorSelector:
     matchExpressions:
     - {key: k8s-app, operator: Exists}
+  remoteWrite:
+    - url: "http://demo-influxdb.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus"
+  remoteRead:
+    - url: "http://demo-influxdb.monitoring:8086/api/v1/prom/read?u=admin&p=admin&db=prometheus"
   ruleSelector:
     matchLabels:
       role: prometheus-rulefiles

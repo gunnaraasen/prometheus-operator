@@ -112,6 +112,22 @@ type PrometheusSpec struct {
 	Affinity *v1.Affinity `json:"affinity,omitempty"`
 	// If specified, the pod's tolerations.
 	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
+	// Remote write spec to send data to a remote store.
+	RemoteWrite []RemoteWriteEndpoint `json:"remoteWrite,omitempty"`
+	// Remote read spec to pull data from a remote store.
+	RemoteRead []RemoteReadEndpoint `json:"remoteRead,omitempty"`
+}
+
+// RemoteWrite defines the configured remote write location for a group Prometheus servers.
+type RemoteWriteEndpoint struct {
+	// The URL of the endpoint to send samples to.
+	URL string `json:"url"`
+}
+
+// RemoteRead defines a configured remote query location for a group Prometheus servers.
+type RemoteReadEndpoint struct {
+	// The URL of the endpoint to query from.
+	URL string `json:"url"`
 }
 
 // Most recent observed status of the Prometheus cluster. Read-only. Not
@@ -359,6 +375,14 @@ type NamespaceSelector struct {
 	// TODO(fabxc): this should embed metav1.LabelSelector eventually.
 	// Currently the selector is only used for namespaces which require more complex
 	// implementation to support label selections.
+}
+
+func (l *RemoteWriteEndpoint) DeepCopyObject() runtime.Object {
+	panic("DeepCopyObject not implemented for Alertmanager")
+}
+
+func (l *RemoteReadEndpoint) DeepCopyObject() runtime.Object {
+	panic("DeepCopyObject not implemented for Alertmanager")
 }
 
 func (l *Alertmanager) DeepCopyObject() runtime.Object {

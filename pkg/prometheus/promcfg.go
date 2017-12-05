@@ -119,6 +119,14 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 	for _, am := range p.Spec.Alerting.Alertmanagers {
 		alertmanagerConfigs = append(alertmanagerConfigs, generateAlertmanagerConfig(version, am))
 	}
+	var remoteWriteConfigs []yaml.MapSlice
+	for _, rw := range p.Spec.RemoteWrite {
+		remoteWriteConfigs = append(remoteWriteConfigs, generateRemoteWriteConfig(rw))
+	}
+	var remoteReadConfigs []yaml.MapSlice
+	for _, rr := range p.Spec.RemoteRead {
+		remoteReadConfigs = append(remoteReadConfigs, generateRemoteReadConfig(rr))
+	}
 
 	cfg = append(cfg, yaml.MapItem{
 		Key:   "scrape_configs",
@@ -134,6 +142,20 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 			},
 		},
 	})
+
+	if len(p.Spec.RemoteWrite) > 0 && version.Major == 2 {
+		cfg = append(cfg, yaml.MapItem{
+			Key:   "remote_write",
+			Value: remoteWriteConfigs,
+		})
+	}
+
+	if len(p.Spec.RemoteRead) > 0 && version.Major == 2 {
+		cfg = append(cfg, yaml.MapItem{
+			Key:   "remote_read",
+			Value: remoteReadConfigs,
+		})
+	}
 
 	return yaml.Marshal(cfg)
 }
@@ -475,4 +497,16 @@ func generateAlertmanagerConfig(version semver.Version, am v1.AlertmanagerEndpoi
 	cfg = append(cfg, yaml.MapItem{Key: "relabel_configs", Value: relabelings})
 
 	return cfg
+}
+
+func generateRemoteWriteConfig(rw v1.RemoteWriteEndpoint) yaml.MapSlice {
+	return yaml.MapSlice{
+		{Key: "url", Value: rw.URL},
+	}
+}
+
+func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
+	return yaml.MapSlice{
+		{Key: "url", Value: rr.URL},
+	}
 }

@@ -377,6 +377,10 @@ type NamespaceSelector struct {
 	// implementation to support label selections.
 }
 
+func (l *RemoteWriteEndpoint) DeepCopyObject() runtime.Object {
+	panic("DeepCopyObject not implemented for Alertmanager")
+}
+
 func (l *Alertmanager) DeepCopyObject() runtime.Object {
 	panic("DeepCopyObject not implemented for Alertmanager")
 }

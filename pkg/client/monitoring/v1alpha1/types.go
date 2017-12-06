@@ -109,6 +109,22 @@ type PrometheusSpec struct {
 	// EvaluationInterval string                    `json:"evaluationInterval"`
 	// Remote          RemoteSpec                 `json:"remote"`
 	// Sharding...
+	// Remote write spec to send data to a remote store.
+	RemoteWrite []RemoteWriteEndpoint `json:"remoteWrite,omitempty"`
+	// Remote read spec to pull data from a remote store.
+	RemoteRead []RemoteReadEndpoint `json:"remoteRead,omitempty"`
+}
+
+// RemoteWrite defines the configured remote write location for a group Prometheus servers.
+type RemoteWriteEndpoint struct {
+	// The URL of the endpoint to send samples to.
+	URL string `json:"url"`
+}
+
+// RemoteRead defines a configured remote query location for a group Prometheus servers.
+type RemoteReadEndpoint struct {
+	// The URL of the endpoint to query from.
+	URL string `json:"url"`
 }
 
 // Most recent observed status of the Prometheus cluster. Read-only. Not

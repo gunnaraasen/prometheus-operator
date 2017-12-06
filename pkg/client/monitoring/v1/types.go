@@ -113,9 +113,9 @@ type PrometheusSpec struct {
 	// If specified, the pod's tolerations.
 	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
 	// Remote write spec to send data to a remote store.
-	RemoteWrite []RemoteWrite `json:"remoteWrite,omitempty"`
+	RemoteWrite []RemoteWriteEndpoint `json:"remoteWrite,omitempty"`
 	// Remote read spec to pull data from a remote store.
-	RemoteRead []RemoteRead `json:"remoteRead,omitempty"`
+	RemoteRead []RemoteReadEndpoint `json:"remoteRead,omitempty"`
 }
 
 // Most recent observed status of the Prometheus cluster. Read-only. Not
@@ -178,9 +178,9 @@ type AlertmanagerEndpoints struct {
 }
 
 // RemoteWrite defines the configured remote write location for a group Prometheus servers.
-type RemoteWrite struct {
+type RemoteWriteEndpoint struct {
 	// The URL of the endpoint to send samples to.
-	URL string `json:"url"`
+	URL string `json:"url,omitempty"`
 	// // Timeout for requests to the remote write endpoint.
 	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
 	// // List of remote write relabel configurations.
@@ -195,9 +195,9 @@ type RemoteWrite struct {
 }
 
 // RemoteRead defines a configured remote query location for a group Prometheus servers.
-type RemoteRead struct {
+type RemoteReadEndpoint struct {
 	// The URL of the endpoint to query from.
-	URL string `json:"url"`
+	URL string `json:"url,omitempty"`
 	// // Timeout for requests to the remote write endpoint.
 	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
 	// // List of remote write relabel configurations.

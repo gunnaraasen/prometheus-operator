@@ -511,7 +511,7 @@ func generateAlertmanagerConfig(version semver.Version, am v1.AlertmanagerEndpoi
 	return cfg
 }
 
-func generateRemoteWriteConfig(rw v1.RemoteWrite) yaml.MapSlice {
+func generateRemoteWriteConfig(rw v1.RemoteWriteEndpoint) yaml.MapSlice {
 	return yaml.MapSlice{
 		{Key: "url", Value: rw.URL},
 	}
@@ -526,7 +526,7 @@ func generateRemoteWriteConfig(rw v1.RemoteWrite) yaml.MapSlice {
 	// return cfg
 }
 
-func generateRemoteReadConfig(rr v1.RemoteRead) yaml.MapSlice {
+func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
 	return yaml.MapSlice{
 		{Key: "url", Value: rr.URL},
 	}

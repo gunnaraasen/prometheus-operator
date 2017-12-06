@@ -23,8 +23,8 @@ This Document documents the types introduced by the Prometheus Operator to be co
 * [PrometheusList](#prometheuslist)
 * [PrometheusSpec](#prometheusspec)
 * [PrometheusStatus](#prometheusstatus)
-* [RemoteRead](#remoteread)
-* [RemoteWrite](#remotewrite)
+* [RemoteReadEndpoint](#remotereadendpoint)
+* [RemoteWriteEndpoint](#remotewriteendpoint)
 * [ServiceMonitor](#servicemonitor)
 * [ServiceMonitorList](#servicemonitorlist)
 * [ServiceMonitorSpec](#servicemonitorspec)
@@ -207,8 +207,8 @@ Specification of the desired behavior of the Prometheus cluster. More info: http
 | secrets | Secrets is a list of Secrets in the same namespace as the Prometheus object, which shall be mounted into the Prometheus Pods. The Secrets are mounted into /etc/prometheus/secrets/<secret-name>. Secrets changes after initial creation of a Prometheus object are not reflected in the running Pods. To change the secrets mounted into the Prometheus Pods, the object must be deleted and recreated with the new list of secrets. | []string | false |
 | affinity | If specified, the pod's scheduling constraints. | *v1.Affinity | false |
 | tolerations | If specified, the pod's tolerations. | []v1.Toleration | false |
-| remoteWrite | Remote write spec to send data to a remote store. | [][RemoteWrite](#remotewrite) | false |
-| remoteRead | Remote read spec to pull data from a remote store. | [][RemoteRead](#remoteread) | false |
+| remoteWrite | Remote write spec to send data to a remote store. | [][RemoteWriteEndpoint](#remotewriteendpoint) | false |
+| remoteRead | Remote read spec to pull data from a remote store. | [][RemoteReadEndpoint](#remotereadendpoint) | false |
 
 [Back to TOC](#table-of-contents)
 
@@ -226,7 +226,7 @@ Most recent observed status of the Prometheus cluster. Read-only. Not included w
 
 [Back to TOC](#table-of-contents)
 
-## RemoteRead
+## RemoteReadEndpoint
 
 RemoteRead defines a configured remote query location for a group Prometheus servers.
 
@@ -236,7 +236,7 @@ RemoteRead defines a configured remote query location for a group Prometheus ser
 
 [Back to TOC](#table-of-contents)
 
-## RemoteWrite
+## RemoteWriteEndpoint
 
 RemoteWrite defines the configured remote write location for a group Prometheus servers.
 

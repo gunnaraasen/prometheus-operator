@@ -15,6 +15,10 @@ spec:
     - namespace: default
       name: alertmanager
       port: web
+  remoteWrite:
+    - url: "http://demo-influxdb.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus"
+  remoteRead:
+    - url: "http://demo-influxdb.monitoring:8086/api/v1/prom/read?u=admin&p=admin&db=prometheus"
   resources:
     requests:
       memory: 400Mi

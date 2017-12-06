@@ -233,10 +233,6 @@ RemoteRead defines a configured remote query location for a group Prometheus ser
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
 | url | The URL of the endpoint to query from. | string | true |
-| remoteTimeout | Timeout for requests to the remote write endpoint. | string | false |
-| basicAuth | List of remote write relabel configurations. | *[BasicAuth](#basicauth) | false |
-| tlsConfig | Configures the remote write request's TLS settings. | *[TLSConfig](#tlsconfig) | false |
-| proxyURL | Optional proxy URL. | string | false |
 
 [Back to TOC](#table-of-contents)
 
@@ -247,11 +243,6 @@ RemoteWrite defines the configured remote write location for a group Prometheus 
 | Field | Description | Scheme | Required |
 | ----- | ----------- | ------ | -------- |
 | url | The URL of the endpoint to send samples to. | string | true |
-| remoteTimeout | Timeout for requests to the remote write endpoint. | string | false |
-| writeRelabelConfigs | List of remote write relabel configurations. | []string | false |
-| basicAuth | Sets the `Authorization` header on every remote write request with the configured username and password. | *[BasicAuth](#basicauth) | false |
-| tlsConfig | Configures the remote write request's TLS settings. | *[TLSConfig](#tlsconfig) | false |
-| proxyURL | Optional proxy URL. | string | false |
 
 [Back to TOC](#table-of-contents)
 

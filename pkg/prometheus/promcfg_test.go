@@ -38,7 +38,7 @@ func TestConfigGeneration(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			// t.Log(string(testcfg))
+			t.Log(string(testcfg))
 
 			if !bytes.Equal(cfg, testcfg) {
 				t.Fatalf("Config generation is not deterministic.\n\n\nFirst generation: \n\n%s\n\nDifferent generation: \n\n%s\n\n", string(cfg), string(testcfg))

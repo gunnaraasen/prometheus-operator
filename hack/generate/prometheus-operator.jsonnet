@@ -12,7 +12,7 @@ local targetPort = 8080;
 local podLabels = {"k8s-app": "prometheus-operator"};
 
 local operatorContainer =
-  container.new("prometheus-operator", "quay.io/coreos/prometheus-operator:v" + version) +
+  container.new("prometheus-operator", "quay.io/influxdb/prometheus-operator:v" + version) +
   container.ports(containerPort.newNamed("http", targetPort)) +
   container.args("--kubelet-service=kube-system/kubelet") +
   container.args("--config-reloader-image=quay.io/coreos/configmap-reload:v0.0.1") +

@@ -113,9 +113,9 @@ type PrometheusSpec struct {
 	// If specified, the pod's tolerations.
 	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
 	// Remote write spec to send data to a remote store.
-	RemoteWrite []RemoteWriteEndpoint `json:"remoteWrite,omitempty"`
+	RemoteWriteEndpoint string `json:"remoteWriteEndpoint,omitempty"`
 	// Remote read spec to pull data from a remote store.
-	RemoteRead []RemoteReadEndpoint `json:"remoteRead,omitempty"`
+	RemoteReadEndpoint string `json:"remoteReadEndpoint,omitempty"`
 }
 
 // Most recent observed status of the Prometheus cluster. Read-only. Not
@@ -177,36 +177,36 @@ type AlertmanagerEndpoints struct {
 	PathPrefix string `json:"pathPrefix"`
 }
 
-// RemoteWrite defines the configured remote write location for a group Prometheus servers.
-type RemoteWriteEndpoint struct {
-	// The URL of the endpoint to send samples to.
-	URL string `json:"url,omitempty"`
-	// // Timeout for requests to the remote write endpoint.
-	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
-	// // List of remote write relabel configurations.
-	// WriteRelabelConfigs []string `json:"writeRelabelConfigs,omitempty"`
-	// // Sets the `Authorization` header on every remote write request with the
-	// // configured username and password.
-	// BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
-	// // Configures the remote write request's TLS settings.
-	// TLSConfig *TLSConfig `json:"tlsConfig,omitempty"`
-	// // Optional proxy URL.
-	// ProxyURL string `json:"proxyURL,omitempty"`
-}
+// // RemoteWrite defines the configured remote write location for a group Prometheus servers.
+// type RemoteWriteEndpoint struct {
+// 	// The URL of the endpoint to send samples to.
+// 	URL string `json:"url,omitempty"`
+// 	// // Timeout for requests to the remote write endpoint.
+// 	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
+// 	// // List of remote write relabel configurations.
+// 	// WriteRelabelConfigs []string `json:"writeRelabelConfigs,omitempty"`
+// 	// // Sets the `Authorization` header on every remote write request with the
+// 	// // configured username and password.
+// 	// BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+// 	// // Configures the remote write request's TLS settings.
+// 	// TLSConfig *TLSConfig `json:"tlsConfig,omitempty"`
+// 	// // Optional proxy URL.
+// 	// ProxyURL string `json:"proxyURL,omitempty"`
+// }
 
-// RemoteRead defines a configured remote query location for a group Prometheus servers.
-type RemoteReadEndpoint struct {
-	// The URL of the endpoint to query from.
-	URL string `json:"url,omitempty"`
-	// // Timeout for requests to the remote write endpoint.
-	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
-	// // List of remote write relabel configurations.
-	// BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
-	// // Configures the remote write request's TLS settings.
-	// TLSConfig *TLSConfig `json:"tlsConfig,omitempty"`
-	// // Optional proxy URL.
-	// ProxyURL string `json:"proxyURL,omitempty"`
-}
+// // RemoteRead defines a configured remote query location for a group Prometheus servers.
+// type RemoteReadEndpoint struct {
+// 	// The URL of the endpoint to query from.
+// 	URL string `json:"url,omitempty"`
+// 	// // Timeout for requests to the remote write endpoint.
+// 	// RemoteTimeout string `json:"remoteTimeout,omitempty"`
+// 	// // List of remote write relabel configurations.
+// 	// BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+// 	// // Configures the remote write request's TLS settings.
+// 	// TLSConfig *TLSConfig `json:"tlsConfig,omitempty"`
+// 	// // Optional proxy URL.
+// 	// ProxyURL string `json:"proxyURL,omitempty"`
+// }
 
 // ServiceMonitor defines monitoring for a set of services.
 type ServiceMonitor struct {

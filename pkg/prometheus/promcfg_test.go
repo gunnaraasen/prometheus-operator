@@ -86,16 +86,8 @@ func generateTestConfig(version string) ([]byte, error) {
 						v1.ResourceMemory: resource.MustParse("400Mi"),
 					},
 				},
-				RemoteWrite: []monitoringv1.RemoteWriteEndpoint{
-					{
-						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
-					},
-				},
-				RemoteRead: []monitoringv1.RemoteReadEndpoint{
-					{
-						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
-					},
-				},
+				RemoteWriteEndpoint: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
+				RemoteReadEndpoint:  "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
 			},
 		},
 		makeServiceMonitors(),

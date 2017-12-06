@@ -129,16 +129,14 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 	for _, am := range p.Spec.Alerting.Alertmanagers {
 		alertmanagerConfigs = append(alertmanagerConfigs, generateAlertmanagerConfig(version, am))
 	}
-
-	var remoteWriteConfigs []yaml.MapSlice
-	for _, rw := range p.Spec.RemoteWrite {
-		remoteWriteConfigs = append(remoteWriteConfigs, generateRemoteWriteConfig(rw))
-	}
-
-	var remoteReadConfigs []yaml.MapSlice
-	for _, rr := range p.Spec.RemoteRead {
-		remoteReadConfigs = append(remoteReadConfigs, generateRemoteReadConfig(rr))
-	}
+	// var remoteWriteConfigs []yaml.MapSlice
+	// for _, rw := range p.Spec.RemoteWrite {
+	// 	remoteWriteConfigs = append(remoteWriteConfigs, generateRemoteWriteConfig(rw))
+	// }
+	// var remoteReadConfigs []yaml.MapSlice
+	// for _, rr := range p.Spec.RemoteRead {
+	// 	remoteReadConfigs = append(remoteReadConfigs, generateRemoteReadConfig(rr))
+	// }
 
 	cfg = append(cfg, yaml.MapItem{
 		Key:   "scrape_configs",
@@ -155,17 +153,27 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 		},
 	})
 
-	if len(remoteWriteConfigs) > 0 {
+	if p.Spec.RemoteWriteEndpoint != "" {
 		cfg = append(cfg, yaml.MapItem{
-			Key:   "remote_write",
-			Value: remoteWriteConfigs,
+			Key: "remote_write",
+			Value: yaml.MapSlice{
+				{
+					Key:   "url",
+					Value: p.Spec.RemoteWriteEndpoint,
+				},
+			},
 		})
 	}
 
-	if len(remoteReadConfigs) > 0 {
+	if p.Spec.RemoteReadEndpoint != "" {
 		cfg = append(cfg, yaml.MapItem{
-			Key:   "remote_read",
-			Value: remoteReadConfigs,
+			Key: "remote_read",
+			Value: yaml.MapSlice{
+				{
+					Key:   "url",
+					Value: p.Spec.RemoteReadEndpoint,
+				},
+			},
 		})
 	}
 
@@ -511,32 +519,32 @@ func generateAlertmanagerConfig(version semver.Version, am v1.AlertmanagerEndpoi
 	return cfg
 }
 
-func generateRemoteWriteConfig(rw v1.RemoteWriteEndpoint) yaml.MapSlice {
-	return yaml.MapSlice{
-		{Key: "url", Value: rw.URL},
-	}
-	// cfg := []yaml.MapSlice{}
-	// for i, _ := range rw {
-	// 	cfg = append(cfg, yaml.MapSlice{
-	// 		{Key: "url", Value: rw[i].URL},
-	// 	})
-	// }
+// func generateRemoteWriteConfig(rw v1.RemoteWriteEndpoint) yaml.MapSlice {
+// 	return yaml.MapSlice{
+// 		{Key: "url", Value: rw.URL},
+// 	}
+// 	// cfg := []yaml.MapSlice{}
+// 	// for i, _ := range rw {
+// 	// 	cfg = append(cfg, yaml.MapSlice{
+// 	// 		{Key: "url", Value: rw[i].URL},
+// 	// 	})
+// 	// }
 
-	// TODO(gunnaraasen): handle remaining options for remote read
-	// return cfg
-}
+// 	// TODO(gunnaraasen): handle remaining options for remote read
+// 	// return cfg
+// }
 
-func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
-	return yaml.MapSlice{
-		{Key: "url", Value: rr.URL},
-	}
-	// cfg := []yaml.MapSlice{}
-	// for i, _ := range rr {
-	// 	cfg = append(cfg, yaml.MapSlice{
-	// 		{Key: "url", Value: rr[i].URL},
-	// 	})
-	// }
+// func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
+// 	return yaml.MapSlice{
+// 		{Key: "url", Value: rr.URL},
+// 	}
+// 	// cfg := []yaml.MapSlice{}
+// 	// for i, _ := range rr {
+// 	// 	cfg = append(cfg, yaml.MapSlice{
+// 	// 		{Key: "url", Value: rr[i].URL},
+// 	// 	})
+// 	// }
 
-	// TODO(gunnaraasen): handle remaining options for remote read
-	// return cfg
-}
+// 	// TODO(gunnaraasen): handle remaining options for remote read
+// 	// return cfg
+// }

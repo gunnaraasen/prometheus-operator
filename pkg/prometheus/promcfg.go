@@ -133,10 +133,10 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 	for _, rw := range p.Spec.RemoteWrite {
 		remoteWriteConfigs = append(remoteWriteConfigs, generateRemoteWriteConfig(rw))
 	}
-	var remoteReadConfigs []yaml.MapSlice
-	for _, rr := range p.Spec.RemoteRead {
-		remoteReadConfigs = append(remoteReadConfigs, generateRemoteReadConfig(rr))
-	}
+	// var remoteReadConfigs []yaml.MapSlice
+	// for _, rr := range p.Spec.RemoteRead {
+	// 	remoteReadConfigs = append(remoteReadConfigs, generateRemoteReadConfig(rr))
+	// }
 
 	cfg = append(cfg, yaml.MapItem{
 		Key:   "scrape_configs",
@@ -165,17 +165,17 @@ func generateConfig(p *v1.Prometheus, mons map[string]*v1.ServiceMonitor, ruleCo
 		})
 	}
 
-	if len(p.Spec.RemoteRead) > 0 && version.Major == 2 {
-		cfg = append(cfg, yaml.MapItem{
-			Key: "remote_read",
-			Value: yaml.MapSlice{
-				{
-					Key:   "url",
-					Value: remoteReadConfigs,
-				},
-			},
-		})
-	}
+	// if len(p.Spec.RemoteRead) > 0 && version.Major == 2 {
+	// 	cfg = append(cfg, yaml.MapItem{
+	// 		Key: "remote_read",
+	// 		Value: yaml.MapSlice{
+	// 			{
+	// 				Key:   "url",
+	// 				Value: remoteReadConfigs,
+	// 			},
+	// 		},
+	// 	})
+	// }
 
 	return yaml.Marshal(cfg)
 }
@@ -525,8 +525,8 @@ func generateRemoteWriteConfig(rw v1.RemoteWriteEndpoint) yaml.MapSlice {
 	}
 }
 
-func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
-	return yaml.MapSlice{
-		{Key: "url", Value: rr.URL},
-	}
-}
+// func generateRemoteReadConfig(rr v1.RemoteReadEndpoint) yaml.MapSlice {
+// 	return yaml.MapSlice{
+// 		{Key: "url", Value: rr.URL},
+// 	}
+// }

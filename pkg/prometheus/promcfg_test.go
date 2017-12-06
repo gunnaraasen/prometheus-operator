@@ -91,11 +91,11 @@ func generateTestConfig(version string) ([]byte, error) {
 						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
 					},
 				},
-				RemoteRead: []monitoringv1.RemoteReadEndpoint{
-					{
-						URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
-					},
-				},
+				// RemoteRead: []monitoringv1.RemoteReadEndpoint{
+				// 	{
+				// 		URL: "http://example.monitoring:8086/api/v1/prom/write?u=admin&p=admin&db=prometheus",
+				// 	},
+				// },
 			},
 		},
 		makeServiceMonitors(),
